@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>To Do List</title>
     <script src="./index.js" defer async></script>
     <link rel="stylesheet" href="./index.css" />
     <link rel="stylesheet" href="styles/css/font-awesome.min.css" />
@@ -19,7 +19,7 @@
           <div class="label-container">
             <label for="task-name">Enter your task</label>
           </div>
-          <div class="input-container">
+          <div class="input-container input-container-warn-message">
             <input
               id="task-name"
               name="task-name"
@@ -45,6 +45,9 @@
           <button type="submit">Submit</button>
         </div>
       </form>
+      <button id="delete-btn">Delete all tasks</button>
+
+      <div id="todo-list" class="todo-list"></div>
     </div>
   </body>
 </html>

@@ -1,6 +1,15 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
 #app {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 .todo-form {
     width: 350px;
@@ -9,10 +18,62 @@
     flex-direction: column;
     border: 2px solid;
     padding: 15px;
+    margin-bottom: 20px;
 }
 
 .todo-form > div {
     padding: 10px 5px;
+}
+
+.input-container-warn-message {
+    position: relative;
+}
+
+.input-container-warn-message:before {
+    content: "Please fill in this field.";
+    position: absolute;
+    background-color: #ffff00;
+    top: 30px;
+    left: 0px;
+    border: 1px solid #858585;
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 12px;
+    display: none;
+}
+
+.input-container-warn-message:after {
+    content: "";
+    position: absolute;
+    background-color: #ffff00;
+    top: 24px;
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    border: 1px solid #858585;
+    border-right: none;
+    border-bottom: none;
+    display: none;
+}
+
+.input-container-warn-message.active:before,
+.input-container-warn-message.active:after {
+    display: block;
+}
+
+
+.todo-list {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-list-item {
+    display: flex;
+    column-gap: 15px;
+    margin-left: 25px;
+    margin-bottom: 8px;
 }
 
 .control-container {
@@ -21,8 +82,19 @@
     justify-content: space-between;
 }
 
-.label-container {
+.button-area {
+    display: flex;
+    flex-direction: column;
 }
 
-.input-container {
+#delete-btn {
+    margin-bottom: 10px;
+}
+
+.fa-times {
+    color: green;
+}
+
+.fa-check {
+    color: red;
 }
