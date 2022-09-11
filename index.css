@@ -1,0 +1,28 @@
+#app {
+    display: flex;
+    justify-content: center;
+}
+.todo-form {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid;
+    padding: 15px;
+}
+
+.todo-form > div {
+    padding: 10px 5px;
+}
+
+.control-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.label-container {
+}
+
+.input-container {
+}
