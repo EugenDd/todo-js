@@ -20,7 +20,10 @@
                         <label for="task-name">Enter your task</label>
                     </div>
                     <div class="input-container">
-                        <input id="task-name" name="task-name" placeholder="Enter your task" type="text" />
+                        <input required id="task-name" name="task-name" placeholder="Enter your task" type="text" />
+                        <div id="task-name-error" class="task-name__error-message">
+                          <span> Error: enter task name - task name is required</span>
+                        </div>
                     </div>
                 </div>
                 <div class="control-container">

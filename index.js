@@ -1,9 +1,19 @@
-const todoTasks = [];
+const todoTasks = [
+    {
+        taskName: 'test',
+        taskStatus: false
+    },
+    {
+        taskName: 'test1',
+        taskStatus: true
+    }
+];
 
 const formElement = document.getElementById('todo-form');
 const taskNameElement = document.getElementById('task-name');
 const taskStatusElement = document.getElementById('task-status');
 const todoListElement = document.getElementById('todo-list');
+const todoErrorMsgElement = document.getElementById('task-name-error');
 
 const resetForm = () => {
     taskNameElement.value = '';
@@ -16,12 +26,25 @@ const addStatusElement = (status) => {
 const addListItem = ({ taskName, taskStatus }) => {
     const containerElem = document.createElement("div");
     containerElem.innerHTML = `
-    <div class="todo-list-item">
         <div>${taskName}</div> 
         <div>${addStatusElement(taskStatus)}</div>
-    </div>`;
+    `;
 
     return containerElem;
+}
+
+const initTodoList = () => {
+    const todoElements = todoTasks.map(addListItem);
+    todoListElement.append(...todoElements);
+}
+
+const showError = () => {
+    const TIMEOUT = 2000;
+
+    const errorClassName = 'show'
+
+    todoErrorMsgElement.classList.add(errorClassName)
+    setTimeout(() => todoErrorMsgElement.classList.remove(errorClassName), TIMEOUT);
 }
 
 formElement.addEventListener('submit', (event) => {
@@ -31,6 +54,7 @@ formElement.addEventListener('submit', (event) => {
     const taskStatus = taskStatusElement.checked;
 
     if (!taskName) {
+        showError()
         return
     }
 
@@ -46,3 +70,4 @@ formElement.addEventListener('submit', (event) => {
     resetForm();
 })
 
+initTodoList();

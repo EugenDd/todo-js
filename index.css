@@ -26,3 +26,13 @@
 
 .input-container {
 }
+
+.task-name__error-message {
+    color: red;
+    font-size: 10px;
+    display: none;
+}
+
+.show {
+    display: block;
+}
