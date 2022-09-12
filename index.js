@@ -57,7 +57,14 @@ const addTaskToTodolist = ({ taskName, taskStatus }) => {
 
 const renderTodoTasks = (tasks) => {
   for (const task of tasks) {
-    addTaskToTodolist(task);
+    const { taskName, taskStatus } = task;
+    addTaskToTodolist({ taskName, taskStatus });
+  }
+};
+
+const updateTodoTasks = (extractedTasks) => {
+  for (task of extractedTasks) {
+    todoTasks.push(task);
   }
 };
 
@@ -66,8 +73,8 @@ const extractTodoTasksFromLocalStorage = () => {
     localStorage.getItem("todoTasks")
   );
   if (todoTasksFromLocalStorage) {
-    const todoTasks = todoTasksFromLocalStorage;
-    console.log(todoTasks);
+    const extractedTasks = todoTasksFromLocalStorage;
+    updateTodoTasks(extractedTasks);
     renderTodoTasks(todoTasks);
   }
 };
