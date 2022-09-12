@@ -21,36 +21,43 @@ const showWarnMessage = () => {
     ".input-container-warn-message"
   );
   warnMessageContainer.classList.add("active");
+
   setTimeout(() => {
     warnMessageContainer.classList.remove("active");
   }, 2000);
 };
 
-const validateTaskNameInputField = () => {
-  return taskNameElement.value.trim() ? true : showWarnMessage();
-};
-
 const addStatusSign = (status) => {
-  return status
-    ? `<i class="fa fa-check" aria-hidden="true"></i>`
-    : `<i class="fa fa-times" aria-hidden="true"></i>`;
+  return `<i class="fa ${status ? `fa-check` : `fa-times`}"></i>`;
 };
 
-const addToTodolist = (currentTask) => {
-  const task = currentTask.taskName;
-  const status = currentTask.taskStatus;
+const createToDoListItem = ({ taskName, taskStatus }) => {
+  const statusSign = addStatusSign(taskStatus);
 
-  const statusSign = addStatusSign(status);
-  todoListElement.innerHTML += `
-    <div class="todo-list-item">
-        <div>${statusSign}</div>
-        <div>${task}</div> 
-    </div>`;
+  const todoListItem = document.createElement("div");
+  todoListItem.classList.add("todo-list-item");
+
+  const statusSignElement = document.createElement("div");
+  statusSignElement.innerHTML = statusSign;
+
+  const taskElement = document.createElement("div");
+  taskElement.innerHTML = taskName;
+
+  todoListItem.append(statusSignElement);
+  todoListItem.append(taskName);
+
+  return todoListItem;
+};
+
+const addTaskToTodolist = ({ taskName, taskStatus }) => {
+  const listItem = createToDoListItem({ taskName, taskStatus });
+
+  todoListElement.append(listItem);
 };
 
 const renderTodoTasks = (tasks) => {
   for (const task of tasks) {
-    addToTodolist(task);
+    addTaskToTodolist(task);
   }
 };
 
@@ -59,7 +66,8 @@ const extractTodoTasksFromLocalStorage = () => {
     localStorage.getItem("todoTasks")
   );
   if (todoTasksFromLocalStorage) {
-    todoTasks = todoTasksFromLocalStorage;
+    const todoTasks = todoTasksFromLocalStorage;
+    console.log(todoTasks);
     renderTodoTasks(todoTasks);
   }
 };
@@ -74,21 +82,32 @@ const resetForm = () => {
 formElement.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  if (validateTaskNameInputField()) {
-    const taskName = taskNameElement.value;
-    const taskStatus = taskStatusElement.checked;
+  const taskName = taskNameElement.value;
+  const taskStatus = taskStatusElement.checked;
 
-    const currentTask = {
-      taskName,
-      taskStatus,
-    };
-
-    todoTasks.push(currentTask);
-    addToTodolist(currentTask);
-    saveTodoTasksToLocalStorage();
-
-    resetForm();
+  if (!taskName.trim()) {
+    taskNameElement.value = "";
+    taskNameElement.focus();
+    showWarnMessage();
+    return;
   }
+
+  const currentDate = new Date();
+  const id = currentDate.getTime();
+
+  // filter
+
+  const currentTask = {
+    // id,
+    taskName,
+    taskStatus,
+  };
+
+  todoTasks.push(currentTask);
+  addTaskToTodolist({ taskName, taskStatus });
+  saveTodoTasksToLocalStorage();
+
+  resetForm();
 });
 
 deleteBtn.addEventListener("click", clearTodoList);
