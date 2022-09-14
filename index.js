@@ -6,17 +6,46 @@ const taskStatusElement = document.getElementById("task-status");
 const todoListElement = document.getElementById("todo-list");
 const deleteBtn = document.getElementById("delete-btn");
 
+const filtredTodoTasks = (selectedTodoListItemId) => {
+  todoTasks = todoTasks.filter(
+    (todoTask) => todoTask.id != selectedTodoListItemId
+  );
+  saveTodoTasksToLocalStorage(todoTasks);
+};
+
+const removeSelectedTodoListItem = (selectedTodoListItemId) => {
+  for (let i = 0; i < todoListElement.children.length; i++) {
+    const todoListItem = todoListElement.children[i];
+
+    if (todoListItem.id === selectedTodoListItemId) {
+      todoListItem.remove();
+
+      filtredTodoTasks(selectedTodoListItemId);
+    }
+  }
+};
+
+todoListElement.addEventListener("click", (event) => {
+  if (event.target.classList.contains("fa-trash-o")) {
+    const selectedTodoListItemId = event.target.parentElement.parentElement.id;
+
+    removeSelectedTodoListItem(selectedTodoListItemId);
+  }
+});
+
 const clearTodoList = () => {
   todoTasks = [];
   todoListElement.innerHTML = "";
   localStorage.clear();
 };
 
-const saveTodoTasksToLocalStorage = () => {
+const saveTodoTasksToLocalStorage = (todoTasks) => {
   localStorage.setItem("todoTasks", JSON.stringify(todoTasks));
 };
 
 const showWarnMessage = () => {
+  const TIMEOUT = 2000;
+
   const warnMessageContainer = document.querySelector(
     ".input-container-warn-message"
   );
@@ -24,41 +53,46 @@ const showWarnMessage = () => {
 
   setTimeout(() => {
     warnMessageContainer.classList.remove("active");
-  }, 2000);
+  }, TIMEOUT);
 };
 
 const addStatusSign = (status) => {
   return `<i class="fa ${status ? `fa-check` : `fa-times`}"></i>`;
 };
 
-const createToDoListItem = ({ taskName, taskStatus }) => {
+const createDivElement = (className, content) => {
+  const divElement = document.createElement("div");
+  divElement.classList.add(className);
+  divElement.innerHTML = content;
+  return divElement;
+};
+
+const createTodoListItem = ({ id, taskName, taskStatus }) => {
   const statusSign = addStatusSign(taskStatus);
+  const trashSign = `<i class="fa fa-trash-o"></i>`;
 
-  const todoListItem = document.createElement("div");
-  todoListItem.classList.add("todo-list-item");
+  const todoListItem = createDivElement("todo-list-item", "");
+  todoListItem.id = id;
 
-  const statusSignElement = document.createElement("div");
-  statusSignElement.innerHTML = statusSign;
+  const statusSignElement = createDivElement("status-sign", statusSign);
+  const taskElement = createDivElement("task-name", taskName);
+  const trashElement = createDivElement("trash-sign", trashSign);
 
-  const taskElement = document.createElement("div");
-  taskElement.innerHTML = taskName;
-
-  todoListItem.append(statusSignElement);
-  todoListItem.append(taskName);
+  todoListItem.append(statusSignElement, taskElement, trashElement);
 
   return todoListItem;
 };
 
-const addTaskToTodolist = ({ taskName, taskStatus }) => {
-  const listItem = createToDoListItem({ taskName, taskStatus });
+const addTaskToTodolist = ({ id, taskName, taskStatus }) => {
+  const listItem = createTodoListItem({ id, taskName, taskStatus });
 
   todoListElement.append(listItem);
 };
 
 const renderTodoTasks = (tasks) => {
   for (const task of tasks) {
-    const { taskName, taskStatus } = task;
-    addTaskToTodolist({ taskName, taskStatus });
+    const { id, taskName, taskStatus } = task;
+    addTaskToTodolist({ id, taskName, taskStatus });
   }
 };
 
@@ -84,6 +118,7 @@ extractTodoTasksFromLocalStorage();
 const resetForm = () => {
   taskNameElement.value = "";
   taskStatusElement.checked = false;
+  taskNameElement.focus();
 };
 
 formElement.addEventListener("submit", (event) => {
@@ -93,8 +128,7 @@ formElement.addEventListener("submit", (event) => {
   const taskStatus = taskStatusElement.checked;
 
   if (!taskName.trim()) {
-    taskNameElement.value = "";
-    taskNameElement.focus();
+    resetForm();
     showWarnMessage();
     return;
   }
@@ -102,17 +136,15 @@ formElement.addEventListener("submit", (event) => {
   const currentDate = new Date();
   const id = currentDate.getTime();
 
-  // filter
-
   const currentTask = {
-    // id,
+    id,
     taskName,
     taskStatus,
   };
 
   todoTasks.push(currentTask);
-  addTaskToTodolist({ taskName, taskStatus });
-  saveTodoTasksToLocalStorage();
+  addTaskToTodolist({ id, taskName, taskStatus });
+  saveTodoTasksToLocalStorage(todoTasks);
 
   resetForm();
 });
