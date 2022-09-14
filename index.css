@@ -17,8 +17,10 @@ body {
     align-items: center;
     flex-direction: column;
     border: 2px solid;
+    border-radius: 5px;
     padding: 15px;
     margin-bottom: 20px;
+
 }
 
 .todo-form > div {
@@ -70,10 +72,10 @@ body {
 }
 
 .todo-list-item {
+    width: 100%;
     display: flex;
-    column-gap: 15px;
-    margin-left: 25px;
-    margin-bottom: 8px;
+    justify-content: space-between;
+    margin: 0 auto 8px auto;
 }
 
 .control-container {
@@ -88,13 +90,30 @@ body {
 }
 
 #delete-btn {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .fa-times {
     color: red;
+    margin-left: 15px;
 }
 
 .fa-check {
     color: green;
+    margin-left: 15px;
+}
+
+.fa-trash-o {
+    opacity: 0.4;
+    margin-right: 15px;
+}
+
+.fa-trash-o:hover {
+    opacity: 1;
+    color: orangered
+}
+
+.task-name {
+    width: 80%;
+    padding: 0 15px;
 }
