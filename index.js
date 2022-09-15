@@ -4,12 +4,21 @@ const formElement = document.getElementById("todo-form");
 const taskNameElement = document.getElementById("task-name");
 const taskStatusElement = document.getElementById("task-status");
 const todoListElement = document.getElementById("todo-list");
-const deleteBtn = document.getElementById("delete-btn");
+const mainTrashSign = document.getElementById("main-trash-sign");
+
+const isTimeToHideMainTrashSign = (lengthOfTodoTasks) => {
+  if (lengthOfTodoTasks <= 1) {
+    hideMainTrashSign();
+  } else if (lengthOfTodoTasks >= 1) {
+    showMainTrashSign();
+  }
+};
 
 const filtredTodoTasks = (selectedTodoListItemId) => {
   todoTasks = todoTasks.filter(
     (todoTask) => todoTask.id != selectedTodoListItemId
   );
+  isTimeToHideMainTrashSign(todoTasks.length);
   saveTodoTasksToLocalStorage(todoTasks);
 };
 
@@ -25,17 +34,18 @@ const removeSelectedTodoListItem = (selectedTodoListItemId) => {
   }
 };
 
-todoListElement.addEventListener("click", (event) => {
-  if (event.target.classList.contains("fa-trash-o")) {
-    const selectedTodoListItemId = event.target.parentElement.parentElement.id;
+const hideMainTrashSign = () => {
+  mainTrashSign.style.visibility = "hidden";
+};
 
-    removeSelectedTodoListItem(selectedTodoListItemId);
-  }
-});
+const showMainTrashSign = () => {
+  mainTrashSign.style.visibility = "visible";
+};
 
 const clearTodoList = () => {
   todoTasks = [];
   todoListElement.innerHTML = "";
+  hideMainTrashSign();
   localStorage.clear();
 };
 
@@ -114,6 +124,7 @@ const extractTodoTasksFromLocalStorage = () => {
 };
 
 extractTodoTasksFromLocalStorage();
+isTimeToHideMainTrashSign(todoTasks.length);
 
 const resetForm = () => {
   taskNameElement.value = "";
@@ -145,8 +156,17 @@ formElement.addEventListener("submit", (event) => {
   todoTasks.push(currentTask);
   addTaskToTodolist({ id, taskName, taskStatus });
   saveTodoTasksToLocalStorage(todoTasks);
+  isTimeToHideMainTrashSign(todoTasks.length);
 
   resetForm();
 });
 
-deleteBtn.addEventListener("click", clearTodoList);
+todoListElement.addEventListener("click", (event) => {
+  if (event.target.classList.contains("fa-trash-o")) {
+    const selectedTodoListItemId = event.target.parentElement.parentElement.id;
+
+    removeSelectedTodoListItem(selectedTodoListItemId);
+  }
+});
+
+mainTrashSign.addEventListener("click", clearTodoList);
