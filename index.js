@@ -5,6 +5,7 @@ const taskNameElement = document.getElementById("task-name");
 const taskStatusElement = document.getElementById("task-status");
 const todoListElement = document.getElementById("todo-list");
 const mainTrashSign = document.getElementById("main-trash-sign");
+const searchInputElement = document.getElementById("search-input");
 
 const isTimeToHideMainTrashSign = (lengthOfTodoTasks) => {
   if (lengthOfTodoTasks <= 1) {
@@ -131,6 +132,21 @@ const resetForm = () => {
   taskStatusElement.checked = false;
   taskNameElement.focus();
 };
+
+searchInputElement.addEventListener("input", (event) => {
+  const searchValue = event.target.value;
+
+  for (i = 0; i < todoTasks.length; i++) {
+    const todoTaskName = todoTasks[i].taskName;
+    const todoTaskElement = todoListElement.children[i];
+
+    const isVisible = todoTaskName.toLowerCase().includes(searchValue)
+      ? true
+      : false;
+
+    todoTaskElement.classList.toggle("hidden-todo-list-item", !isVisible);
+  }
+});
 
 formElement.addEventListener("submit", (event) => {
   event.preventDefault();
