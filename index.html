@@ -6,57 +6,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
     <script src="./index.js" defer async></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./index.css" />
     <link rel="stylesheet" href="styles/css/font-awesome.min.css" />
   </head>
   <body>
     <div id="app">
-      <form id="todo-form" class="todo-form">
-        <div class="form-title">
-          <h3>What is your next task?</h3>
-        </div>
-        <div class="control-container">
-          <div class="label-container">
-            <label for="task-name">Enter your task</label>
+      <div class="top-wrapper wrapper">
+        <form id="todo-form" class="todo-form">
+          <div class="form-title">
+            <h3>What is your next task?</h3>
           </div>
-          <div class="input-container input-container-warn-message">
-            <input
-              id="task-name"
-              name="task-name"
-              placeholder="Enter your task"
-              type="text"
-            />
+          <div class="control-container">
+            <div class="label-container">
+              <label for="task-name">Enter your task</label>
+            </div>
+            <div class="input-container input-container-warn-message">
+              <input
+                id="task-name"
+                name="task-name"
+                placeholder="Enter your task"
+                type="text"
+              />
+            </div>
           </div>
-        </div>
-        <div class="control-container">
-          <div class="label-container">
-            <label for="task-status">Is done?</label>
+          <div class="control-container">
+            <div class="label-container">
+              <label for="task-status">Is done?</label>
+            </div>
+            <div class="input-container">
+              <input
+                id="task-status"
+                name="task-status"
+                placeholder="Is done?"
+                type="checkbox"
+              />
+            </div>
           </div>
-          <div class="input-container">
-            <input
-              id="task-status"
-              name="task-status"
-              placeholder="Is done?"
-              type="checkbox"
-            />
+          <div class="button-area">
+            <button type="submit">Submit</button>
           </div>
+        </form>
+        <div class="search-container">
+          <label for="search-input">
+            <i class="fa fa-search"></i>
+          </label>
+          <input
+            type="search"
+            id="search-input"
+            placeholder="Type to search..."
+          />
         </div>
-        <div class="button-area">
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-      <div class="search-container">
-        <input
-          type="search"
-          id="search-input"
-          placeholder="Type to search..."
-        />
       </div>
-      <div class="main-trash-sign-container">
-        <i class="fa fa-trash-o main-trash-sign fa-lg" id="main-trash-sign">
-        </i>
+      <div class="bottom-wrapper wrapper">
+        <div class="main-trash-sign-container">
+          <i class="fa fa-trash-o main-trash-sign fa-lg" id="main-trash-sign">
+          </i>
+        </div>
+        <div id="todo-list" class="todo-list"></div>
       </div>
-      <div id="todo-list" class="todo-list"></div>
     </div>
   </body>
 </html>
