@@ -117,3 +117,16 @@ body {
     width: 80%;
     padding: 0 15px;
 }
+
+.main-trash-sign-container {
+    width: 350px;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 12px;
+}
+
+.main-trash-sign {
+    margin-right: 13px;
+    visibility: hidden;
+}
+
