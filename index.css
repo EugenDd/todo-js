@@ -4,28 +4,83 @@
 
 body {
     font-family: "Roboto", sans-serif;
+    background-color: #E6E8E6;
+    margin: 0;
+    overflow-y: scroll;
 }
 
 #app {
+    width: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: column;
+    
 }
+
+.top-wrapper {
+    height: 44vh;
+    position: fixed;
+    top: 0;
+    background-color: #9C7A97;
+    box-shadow: 1px 0px 5px gray;
+}   
+
+.bottom-wrapper {
+    margin-top: 43vh;
+    padding-top: 20px;
+
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .todo-form {
     width: 350px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: 2px solid;
+    border: 1px solid;
     border-radius: 5px;
     padding: 15px;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    background-color: #E6E8E6;
 
 }
 
 .todo-form > div {
     padding: 10px 5px;
 }
+
+.search-container {
+    position: relative;
+}
+.search-container label {
+    position: absolute;
+    left: 5px;
+    top: 2px;
+}
+
+.input-container input, 
+.search-container input {
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: 3px 3px 3px 25px;
+    font-family: inherit;
+}
+
+.input-container input {
+    padding-left: 3px;
+}
+
+.fa-search {
+    margin-top: 2px;
+}
+
 
 .input-container-warn-message {
     position: relative;
@@ -34,7 +89,7 @@ body {
 .input-container-warn-message:before {
     content: "Please fill in this field.";
     position: absolute;
-    background-color: #ffff00;
+    background-color: #FFFA9D;
     top: 30px;
     left: 0px;
     border: 1px solid #858585;
@@ -47,7 +102,7 @@ body {
 .input-container-warn-message:after {
     content: "";
     position: absolute;
-    background-color: #ffff00;
+    background-color: #FFFA9D;
     top: 24px;
     left: 15px;
     width: 10px;
@@ -93,7 +148,23 @@ body {
     flex-direction: column;
 }
 
+.button-area button {
+    background-color: #92b9a4;
+    color: black;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 15px;
+    font-family: inherit;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border: 1px solid hsl(0, 0%, 32%);
+    font-weight: 500;
+}
 
+.button-area button:hover {
+    background-color: #3c5d4b;
+    color: white
+}
 
 .fa-times {
     color: red;
@@ -106,22 +177,17 @@ body {
 }
 
 .fa-trash-o {
-    opacity: 0.4;
+    color: #8c8c8c;
     margin-right: 15px;
 }
 
 .fa-trash-o:hover {
-    opacity: 1;
     color: orangered
 }
 
 .task-name {
     width: 80%;
     padding: 0 15px;
-}
-
-.search-container {
-    margin-bottom: 12px;
 }
 
 .main-trash-sign-container {
