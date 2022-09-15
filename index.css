@@ -78,6 +78,10 @@ body {
     margin: 0 auto 8px auto;
 }
 
+.hidden-todo-list-item {
+    display: none;
+}
+
 .control-container {
     width: 100%;
     display: flex;
@@ -89,9 +93,7 @@ body {
     flex-direction: column;
 }
 
-#delete-btn {
-    margin-bottom: 20px;
-}
+
 
 .fa-times {
     color: red;
@@ -118,6 +120,10 @@ body {
     padding: 0 15px;
 }
 
+.search-container {
+    margin-bottom: 12px;
+}
+
 .main-trash-sign-container {
     width: 350px;
     display: flex;
@@ -129,4 +135,5 @@ body {
     margin-right: 13px;
     visibility: hidden;
 }
+
 
